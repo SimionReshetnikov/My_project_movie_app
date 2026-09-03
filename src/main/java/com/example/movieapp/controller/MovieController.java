@@ -1,7 +1,7 @@
 package com.example.movieapp.controller;
 
-import com.example.movieapp.model.Movie;
-import com.example.movieapp.repository.MovieRepository;
+import com.example.movieapp.dto.request.MovieRequestDto;
+import com.example.movieapp.dto.response.MovieResponseDto;
 import com.example.movieapp.service.MovieService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +18,23 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<Movie> getAllMovies() {
+    public List<MovieResponseDto> getAllMovies() {
         return movieService.getAllMovies();
     }
 
     @GetMapping("/{id}")
-    public Movie getMovieById(@PathVariable Long id) {
+    public MovieResponseDto getMovieById(@PathVariable Long id) {
         return movieService.getMovieById(id);
     }
 
     @PostMapping
-    public Movie createMovie(@RequestBody Movie movie) {
+    public MovieResponseDto createMovie(@RequestBody MovieRequestDto movie) {
         return movieService.createMovie(movie);
     }
 
     @PutMapping("/{id}")
-    public Movie updateMovie(@PathVariable Long id,
-                             @RequestBody Movie movie) {
+    public MovieResponseDto updateMovie(@PathVariable Long id,
+                             @RequestBody MovieRequestDto movie) {
         return movieService.updateMovie(id ,movie);
     }
 

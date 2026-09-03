@@ -1,5 +1,8 @@
 package com.example.movieapp.service;
 
+import com.example.movieapp.dto.request.MovieRequestDto;
+import com.example.movieapp.dto.response.MovieResponseDto;
+import com.example.movieapp.mapper.MovieMapper;
 import com.example.movieapp.model.Movie;
 import com.example.movieapp.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,36 +19,31 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public List<MovieResponseDto> getAllMovies() {
+        return movieRepository.findAll().stream()
+                .map(MovieMapper::toResponse).toList();
     }
 
-    public Movie getMovieById(Long id) {
-        return movieRepository.findById(id)
+    public MovieResponseDto getMovieById(Long id) {
+         return MovieMapper.toResponse(movieRepository.findById(id)
+                 .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id))));
+    }
+
+    public MovieResponseDto createMovie(MovieRequestDto movieRequestDto) {
+        Movie movie = MovieMapper.toEntity(movieRequestDto);
+        return MovieMapper.toResponse(movieRepository.save(movie));
+    }
+
+    public MovieResponseDto updateMovie(Long id, MovieRequestDto movieDetails) {
+        Movie movieSave = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id)));
-    }
-
-    public Movie createMovie(Movie movie) {
-        return movieRepository.save(movie);
-    }
-
-    public Movie updateMovie(Long id, Movie movieDetails) {
-        Movie movieSave = getMovieById(id);
-
-        movieSave.setTitle(movieDetails.getTitle());
-        movieSave.setYear(movieDetails.getYear());
-        movieSave.setGenreMovie(movieDetails.getGenreMovie());
-        movieSave.setRating(movieDetails.getRating());
-        movieSave.setDescription(movieDetails.getDescription());
-        movieSave.setPosterUrl(movieDetails.getPosterUrl());
-        movieSave.setDirector(movieDetails.getDirector());
-        movieSave.setActors(movieDetails.getActors());
-
-        return movieRepository.save(movieSave);
+        MovieMapper.updateEntity(movieSave, movieDetails);
+        return MovieMapper.toResponse(movieRepository.save(movieSave));
     }
 
     public void deleteMovie(Long id) {
-        Movie movie = getMovieById(id);
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id)));
         movieRepository.delete(movie);
     }
 }
