@@ -1,5 +1,6 @@
 package com.example.movieapp.dto.request;
 
+import com.example.movieapp.model.Genre;
 import com.example.movieapp.model.GenreMovie;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,7 +17,7 @@ public class MovieRequestDto {
     @Max(2026)
     private Integer year;
 
-    private GenreMovie genreMovie;
+    private Genre genre;
 
     @Min(0)
     @Max(10)
@@ -48,12 +49,12 @@ public class MovieRequestDto {
         this.year = year;
     }
 
-    public GenreMovie getGenreMovie() {
-        return genreMovie;
+    public Genre getGenreMovie() {
+        return genre;
     }
 
-    public void setGenreMovie(GenreMovie genreMovie) {
-        this.genreMovie = genreMovie;
+    public void setGenreMovie(Genre genreMovie) {
+        this.genre = genreMovie;
     }
 
     public Double getRating() {

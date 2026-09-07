@@ -3,6 +3,7 @@ package com.example.movieapp.service;
 import com.example.movieapp.dto.request.MovieRequestDto;
 import com.example.movieapp.dto.response.MovieResponseDto;
 import com.example.movieapp.mapper.MovieMapper;
+import com.example.movieapp.model.Genre;
 import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.model.Movie;
 import com.example.movieapp.repository.MovieRepository;
@@ -64,7 +65,7 @@ public class MovieService {
                 .map(MovieMapper::toResponse).toList();
     }
 
-    public List<MovieResponseDto> filterMovies(GenreMovie genre, Integer year) {
+    public List<MovieResponseDto> filterMovies(Genre genre, Integer year) {
         if (genre != null && year != null) {
             return movieRepository.findByGenreMovieAndYear(genre, year).stream()
                     .map(MovieMapper::toResponse).toList();

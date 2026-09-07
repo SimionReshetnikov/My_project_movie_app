@@ -22,9 +22,8 @@ public class Movie {
     @Max(2026)
     private Integer year;
 
-    @Column(nullable = false, length = 30)
-    @Enumerated(EnumType.STRING)
-    private GenreMovie genreMovie;
+    @ManyToOne
+    private Genre genre;
 
     @Min(0)
     @Max(10)
@@ -45,12 +44,12 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(String title, Integer year, GenreMovie genreMovie,
+    public Movie(String title, Integer year, Genre genre,
                  Double rating, String description,
                  String posterUrl, String director, String actors) {
         this.title = title;
         this.year = year;
-        this.genreMovie = genreMovie;
+        this.genre = genre;
         this.rating = rating;
         this.description = description;
         this.posterUrl = posterUrl;
@@ -82,12 +81,12 @@ public class Movie {
         this.year = year;
     }
 
-    public GenreMovie getGenreMovie() {
-        return genreMovie;
+    public Genre getGenreMovie() {
+        return genre;
     }
 
-    public void setGenreMovie(GenreMovie genreMovie) {
-        this.genreMovie = genreMovie;
+    public void setGenreMovie(Genre genreMovie) {
+        this.genre = genreMovie;
     }
 
     public Double getRating() {

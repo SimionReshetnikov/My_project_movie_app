@@ -1,5 +1,6 @@
 package com.example.movieapp.dto.response;
 
+import com.example.movieapp.model.Genre;
 import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.model.Movie;
 
@@ -8,7 +9,7 @@ public class MovieResponseDto {
     private Long id;
     private String title;
     private Integer year;
-    private GenreMovie genreMovie;
+    private Genre genreMovie;
     private Double rating;
     private String description;
     private String posterUrl;
@@ -39,7 +40,7 @@ public class MovieResponseDto {
         return year;
     }
 
-    public GenreMovie getGenreMovie() {
+    public Genre getGenreMovie() {
         return genreMovie;
     }
 
