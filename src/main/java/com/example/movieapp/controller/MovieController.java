@@ -4,6 +4,7 @@ import com.example.movieapp.dto.request.MovieRequestDto;
 import com.example.movieapp.dto.response.MovieResponseDto;
 import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.*;
 
@@ -30,13 +31,13 @@ public class MovieController {
     }
 
     @PostMapping
-    public MovieResponseDto createMovie(@RequestBody MovieRequestDto movie) {
+    public MovieResponseDto createMovie(@Valid @RequestBody MovieRequestDto movie) {
         return movieService.createMovie(movie);
     }
 
     @PutMapping("/{id}")
     public MovieResponseDto updateMovie(@PathVariable Long id,
-                             @RequestBody MovieRequestDto movie) {
+                                        @Valid @RequestBody MovieRequestDto movie) {
         return movieService.updateMovie(id ,movie);
     }
 

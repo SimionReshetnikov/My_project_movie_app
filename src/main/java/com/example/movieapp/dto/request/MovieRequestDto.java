@@ -1,16 +1,35 @@
 package com.example.movieapp.dto.request;
 
 import com.example.movieapp.model.GenreMovie;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class MovieRequestDto {
 
+    @NotBlank
     private String title;
+
+    @NotNull
+    @Min(1900)
+    @Max(2026)
     private Integer year;
+
     private GenreMovie genreMovie;
+
+    @Min(0)
+    @Max(10)
     private Double rating;
+
     private String description;
+
     private String posterUrl;
+
+    @NotBlank
     private String director;
+
+    @NotBlank
     private String actors;
 
     public String getTitle() {
