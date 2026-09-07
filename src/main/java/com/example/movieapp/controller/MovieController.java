@@ -7,6 +7,7 @@ import com.example.movieapp.service.MovieService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -33,6 +34,12 @@ public class MovieController {
     @PostMapping
     public MovieResponseDto createMovie(@Valid @RequestBody MovieRequestDto movie) {
         return movieService.createMovie(movie);
+    }
+
+    @PostMapping("/{id}/poster")
+    public MovieResponseDto uploadPoster(@PathVariable Long id,
+                                         @RequestParam("file")MultipartFile file) {
+        return movieService.updatePosterUrlMovie(id, file);
     }
 
     @PutMapping("/{id}")

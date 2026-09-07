@@ -7,9 +7,15 @@ import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.model.Movie;
 import com.example.movieapp.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -77,5 +83,35 @@ public class MovieService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Movie> moviePage = movieRepository.findAll(pageable);
         return moviePage.map(MovieMapper::toResponse);
+    }
+
+    @Transactional
+    public MovieResponseDto updatePosterUrlMovie(Long id, MultipartFile posterUrlFile) {
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id)));
+
+        if(posterUrlFile.isEmpty()) {
+            throw new IllegalArgumentException("File posterUrlFile is empty.");
+        }
+
+        String uploadDir = "uploads/posters";
+        try {
+            File directory = new File(uploadDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            String fileName = "movie-" + id + ".jpg";
+            Path path = Paths.get(uploadDir + fileName);
+            posterUrlFile.transferTo(path.toFile());
+
+            movie.setPosterUrl("/" + uploadDir + fileName);
+
+            Movie saveMovie = movieRepository.save(movie);
+
+            return MovieMapper.toResponse(saveMovie);
+        } catch(IOException ex) {
+            throw new RuntimeException("Failed to save poster", ex);
+        }
     }
 }
