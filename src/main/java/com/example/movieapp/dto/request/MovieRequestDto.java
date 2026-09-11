@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Set;
+
 public class MovieRequestDto {
 
     @NotBlank
@@ -17,7 +19,7 @@ public class MovieRequestDto {
     @Max(2026)
     private Integer year;
 
-    private Genre genre;
+    private Set<Genre> genre;
 
     @Min(0)
     @Max(10)
@@ -49,11 +51,11 @@ public class MovieRequestDto {
         this.year = year;
     }
 
-    public Genre getGenreMovie() {
+    public Set<Genre> getGenreMovie() {
         return genre;
     }
 
-    public void setGenreMovie(Genre genreMovie) {
+    public void setGenreMovie(Set<Genre> genreMovie) {
         this.genre = genreMovie;
     }
 

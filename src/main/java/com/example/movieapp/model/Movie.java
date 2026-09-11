@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "Movies")
 public class Movie {
@@ -22,8 +25,13 @@ public class Movie {
     @Max(2026)
     private Integer year;
 
-    @ManyToOne
-    private Genre genre;
+    @ManyToMany
+    @JoinTable(
+            name = "movie_genre",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genre = new HashSet<>();
 
     @Min(0)
     @Max(10)
@@ -44,9 +52,9 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(String title, Integer year, Genre genre,
-                 Double rating, String description,
-                 String posterUrl, String director, String actors) {
+    public Movie(String title, Integer year, Set<Genre> genre, Double rating,
+                 String description, String posterUrl, String director,
+                 String actors) {
         this.title = title;
         this.year = year;
         this.genre = genre;
@@ -81,11 +89,11 @@ public class Movie {
         this.year = year;
     }
 
-    public Genre getGenreMovie() {
+    public Set<Genre> getGenreMovie() {
         return genre;
     }
 
-    public void setGenreMovie(Genre genreMovie) {
+    public void setGenreMovie(Set<Genre> genreMovie) {
         this.genre = genreMovie;
     }
 

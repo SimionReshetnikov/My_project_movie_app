@@ -16,8 +16,10 @@ public class Genre {
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "genre", cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "genre")
     private List<Movie> movie;
+
+    public Genre() {}
 
     public Genre(Long id, String name, List<Movie> movie) {
         this.id = id;

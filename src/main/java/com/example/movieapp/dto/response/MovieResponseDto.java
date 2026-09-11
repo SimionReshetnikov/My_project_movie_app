@@ -4,12 +4,14 @@ import com.example.movieapp.model.Genre;
 import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.model.Movie;
 
+import java.util.Set;
+
 public class MovieResponseDto {
 
     private Long id;
     private String title;
     private Integer year;
-    private Genre genreMovie;
+    private Set<Genre> genreMovie;
     private Double rating;
     private String description;
     private String posterUrl;
@@ -40,7 +42,7 @@ public class MovieResponseDto {
         return year;
     }
 
-    public Genre getGenreMovie() {
+    public Set<Genre> getGenreMovie() {
         return genreMovie;
     }
 
