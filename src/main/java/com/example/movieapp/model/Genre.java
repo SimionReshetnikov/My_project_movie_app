@@ -3,6 +3,7 @@ package com.example.movieapp.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ public class Genre {
     private String name;
 
     @ManyToMany(mappedBy = "genre")
-    private List<Movie> movie;
+    private List<Movie> movie = new ArrayList<>();
 
     public Genre() {}
 

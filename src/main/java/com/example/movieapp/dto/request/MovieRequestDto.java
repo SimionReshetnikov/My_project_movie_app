@@ -1,5 +1,7 @@
 package com.example.movieapp.dto.request;
 
+import com.example.movieapp.model.Actor;
+import com.example.movieapp.model.Director;
 import com.example.movieapp.model.Genre;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -29,10 +31,10 @@ public class MovieRequestDto {
     private String posterUrl;
 
     @NotBlank
-    private String director;
+    private Director director;
 
     @NotBlank
-    private String actors;
+    private Set<Actor> actors;
 
     public String getTitle() {
         return title;
@@ -82,19 +84,19 @@ public class MovieRequestDto {
         this.posterUrl = posterUrl;
     }
 
-    public String getDirector() {
+    public Director getDirector() {
         return director;
     }
 
-    public void setDirector(String director) {
+    public void setDirector(Director director) {
         this.director = director;
     }
 
-    public String getActors() {
+    public Set<Actor> getActors() {
         return actors;
     }
 
-    public void setActors(String actors) {
+    public void setActors(Set<Actor> actors) {
         this.actors = actors;
     }
 }

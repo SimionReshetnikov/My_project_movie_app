@@ -11,12 +11,10 @@ public class MovieMapper {
         return new Movie(
                 dto.getTitle(),
                 dto.getYear(),
-                dto.getGenreMovie(),
                 dto.getRating(),
                 dto.getDescription(),
                 dto.getPosterUrl(),
-                dto.getDirector(),
-                dto.getActors()
+                dto.getDirector()
         );
     }
 

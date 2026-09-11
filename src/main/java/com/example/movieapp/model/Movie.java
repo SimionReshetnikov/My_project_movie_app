@@ -44,25 +44,28 @@ public class Movie {
     @NotBlank
     private String posterUrl;
 
-    @Column(nullable = false)
-    @NotBlank
-    private String director;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "director_id")
+    private Director director;
 
-    private String actors;
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actors",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private Set<Actor> actors = new HashSet<>();
 
     public Movie() {}
 
-    public Movie(String title, Integer year, Set<Genre> genre, Double rating,
-                 String description, String posterUrl, String director,
-                 String actors) {
+    public Movie(String title, Integer year, Double rating,
+                 String description, String posterUrl, Director director) {
         this.title = title;
         this.year = year;
-        this.genre = genre;
         this.rating = rating;
         this.description = description;
         this.posterUrl = posterUrl;
         this.director = director;
-        this.actors = actors;
     }
 
     public Long getId() {
@@ -121,19 +124,19 @@ public class Movie {
         this.posterUrl = posterUrl;
     }
 
-    public String getDirector() {
+    public Director getDirector() {
         return director;
     }
 
-    public void setDirector(String director) {
+    public void setDirector(Director director) {
         this.director = director;
     }
 
-    public String getActors() {
+    public Set<Actor> getActors() {
         return actors;
     }
 
-    public void setActors(String actors) {
+    public void setActors(Set<Actor> actors) {
         this.actors = actors;
     }
 }

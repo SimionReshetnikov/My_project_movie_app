@@ -1,8 +1,11 @@
 package com.example.movieapp.dto.response;
 
+import com.example.movieapp.model.Actor;
+import com.example.movieapp.model.Director;
 import com.example.movieapp.model.Genre;
 import com.example.movieapp.model.Movie;
 
+import java.awt.*;
 import java.util.Set;
 
 public class MovieResponseDto {
@@ -14,18 +17,18 @@ public class MovieResponseDto {
     private Double rating;
     private String description;
     private String posterUrl;
-    private String director;
-    private String actors;
+    private Director director;
+    private Set<Actor> actors;
 
     public MovieResponseDto(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
         this.year = movie.getYear();
-        this.genreMovie = movie.getGenreMovie();
         this.rating = movie.getRating();
         this.description = movie.getDescription();
         this.posterUrl = movie.getPosterUrl();
         this.director = movie.getDirector();
+        this.genreMovie = movie.getGenreMovie();
         this.actors = movie.getActors();
     }
 
@@ -57,11 +60,11 @@ public class MovieResponseDto {
         return posterUrl;
     }
 
-    public String getDirector() {
+    public Director getDirector() {
         return director;
     }
 
-    public String getActors() {
+    public Set<Actor> getActors() {
         return actors;
     }
 }

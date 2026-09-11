@@ -4,7 +4,6 @@ import com.example.movieapp.dto.request.MovieRequestDto;
 import com.example.movieapp.dto.response.MovieResponseDto;
 import com.example.movieapp.mapper.MovieMapper;
 import com.example.movieapp.model.Genre;
-import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.model.Movie;
 import com.example.movieapp.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
