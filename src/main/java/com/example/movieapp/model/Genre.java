@@ -10,6 +10,7 @@ import java.util.List;
 public class Genre {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
@@ -21,10 +22,8 @@ public class Genre {
 
     public Genre() {}
 
-    public Genre(Long id, String name, List<Movie> movie) {
-        this.id = id;
+    public Genre(String name) {
         this.name = name;
-        this.movie = movie;
     }
 
     public Long getId() {

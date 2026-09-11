@@ -3,7 +3,6 @@ package com.example.movieapp.controller;
 import com.example.movieapp.dto.request.MovieRequestDto;
 import com.example.movieapp.dto.response.MovieResponseDto;
 import com.example.movieapp.model.Genre;
-import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.service.MovieService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

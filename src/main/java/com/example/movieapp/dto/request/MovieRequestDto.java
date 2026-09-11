@@ -1,7 +1,6 @@
 package com.example.movieapp.dto.request;
 
 import com.example.movieapp.model.Genre;
-import com.example.movieapp.model.GenreMovie;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

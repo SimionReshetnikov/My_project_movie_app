@@ -1,7 +1,6 @@
 package com.example.movieapp.dto.response;
 
 import com.example.movieapp.model.Genre;
-import com.example.movieapp.model.GenreMovie;
 import com.example.movieapp.model.Movie;
 
 import java.util.Set;
