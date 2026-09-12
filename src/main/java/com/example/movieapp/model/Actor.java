@@ -22,7 +22,7 @@ public class Actor {
 
     @Min(1800)
     @Max(2026)
-    private Integer yearBirth;
+    private Integer birthYear;
 
     @ManyToMany(mappedBy = "actors")
     private Set<Movie> films = new HashSet<>();
@@ -31,7 +31,7 @@ public class Actor {
 
     public Actor(String name, Integer yearBirth) {
         this.name = name;
-        this.yearBirth = yearBirth;
+        this.birthYear = yearBirth;
     }
 
     public Long getId() {
@@ -51,11 +51,11 @@ public class Actor {
     }
 
     public Integer getYearBirth() {
-        return yearBirth;
+        return birthYear;
     }
 
     public void setYearBirth(Integer yearBirth) {
-        this.yearBirth = yearBirth;
+        this.birthYear = yearBirth;
     }
 
     public Set<Movie> getFilms() {
