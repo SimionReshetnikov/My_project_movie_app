@@ -1,24 +1,21 @@
 package com.example.movieapp.dto.response;
 
-import com.example.movieapp.model.Actor;
-import com.example.movieapp.model.Director;
-import com.example.movieapp.model.Genre;
 import com.example.movieapp.model.Movie;
 
-import java.awt.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MovieResponseDto {
 
     private Long id;
     private String title;
     private Integer year;
-    private Set<Genre> genreMovie;
+    private Set<GenreResponseDto> genreMovies;
     private Double rating;
     private String description;
     private String posterUrl;
-    private Director director;
-    private Set<Actor> actors;
+    private DirectorResponseDto director;
+    private Set<ActorResponseDto> actors;
 
     public MovieResponseDto(Movie movie) {
         this.id = movie.getId();
@@ -27,9 +24,12 @@ public class MovieResponseDto {
         this.rating = movie.getRating();
         this.description = movie.getDescription();
         this.posterUrl = movie.getPosterUrl();
-        this.director = movie.getDirector();
-        this.genreMovie = movie.getGenreMovie();
-        this.actors = movie.getActors();
+        this.director = movie.getDirector() != null ?
+                new DirectorResponseDto(movie.getDirector()) : null;
+        this.genreMovies = movie.getGenreMovie().stream()
+                .map(GenreResponseDto::new).collect(Collectors.toSet());
+        this.actors = movie.getActors().stream()
+                .map(ActorResponseDto::new).collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -44,8 +44,8 @@ public class MovieResponseDto {
         return year;
     }
 
-    public Set<Genre> getGenreMovie() {
-        return genreMovie;
+    public Set<GenreResponseDto> getGenreMovies() {
+        return genreMovies;
     }
 
     public Double getRating() {
@@ -60,11 +60,11 @@ public class MovieResponseDto {
         return posterUrl;
     }
 
-    public Director getDirector() {
+    public DirectorResponseDto getDirector() {
         return director;
     }
 
-    public Set<Actor> getActors() {
+    public Set<ActorResponseDto> getActors() {
         return actors;
     }
 }

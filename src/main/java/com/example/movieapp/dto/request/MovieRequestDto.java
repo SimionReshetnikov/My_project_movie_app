@@ -1,8 +1,5 @@
 package com.example.movieapp.dto.request;
 
-import com.example.movieapp.model.Actor;
-import com.example.movieapp.model.Director;
-import com.example.movieapp.model.Genre;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +17,7 @@ public class MovieRequestDto {
     @Max(2026)
     private Integer year;
 
-    private Set<Genre> genre;
+    private Set<Long> genreIds;
 
     @Min(0)
     @Max(10)
@@ -30,11 +27,9 @@ public class MovieRequestDto {
 
     private String posterUrl;
 
-    @NotBlank
-    private Director director;
+    private Long directorId;
 
-    @NotBlank
-    private Set<Actor> actors;
+    private Set<Long> actorIds;
 
     public String getTitle() {
         return title;
@@ -52,12 +47,12 @@ public class MovieRequestDto {
         this.year = year;
     }
 
-    public Set<Genre> getGenreMovie() {
-        return genre;
+    public Set<Long> getGenreMovie() {
+        return genreIds;
     }
 
-    public void setGenreMovie(Set<Genre> genreMovie) {
-        this.genre = genreMovie;
+    public void setGenreMovie(Set<Long> genreMovie) {
+        this.genreIds = genreMovie;
     }
 
     public Double getRating() {
@@ -84,19 +79,19 @@ public class MovieRequestDto {
         this.posterUrl = posterUrl;
     }
 
-    public Director getDirector() {
-        return director;
+    public Long getDirector() {
+        return directorId;
     }
 
-    public void setDirector(Director director) {
-        this.director = director;
+    public void setDirector(Long director) {
+        this.directorId = director;
     }
 
-    public Set<Actor> getActors() {
-        return actors;
+    public Set<Long> getActorIds() {
+        return actorIds;
     }
 
-    public void setActors(Set<Actor> actors) {
-        this.actors = actors;
+    public void setActorIds(Set<Long> actorIds) {
+        this.actorIds = actorIds;
     }
 }

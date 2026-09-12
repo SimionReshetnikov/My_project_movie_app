@@ -2,19 +2,24 @@ package com.example.movieapp.mapper;
 
 import com.example.movieapp.dto.request.MovieRequestDto;
 import com.example.movieapp.dto.response.MovieResponseDto;
+import com.example.movieapp.model.Actor;
+import com.example.movieapp.model.Director;
+import com.example.movieapp.model.Genre;
 import com.example.movieapp.model.Movie;
+
+import java.util.Set;
 
 public class MovieMapper {
 
     //Request -> Entity
-    public static Movie toEntity(MovieRequestDto dto) {
+    public static Movie toEntity(MovieRequestDto dto, Director director) {
         return new Movie(
                 dto.getTitle(),
                 dto.getYear(),
                 dto.getRating(),
                 dto.getDescription(),
                 dto.getPosterUrl(),
-                dto.getDirector()
+                director
         );
     }
 
@@ -24,7 +29,9 @@ public class MovieMapper {
     }
 
     //Update Entity from DTO
-    public static void updateEntity(Movie movie, MovieRequestDto dto) {
+    public static void updateEntity(Movie movie, MovieRequestDto dto,
+                                    Set<Genre> genres, Director director,
+                                    Set<Actor> actors) {
         if (dto.getTitle() != null) {
             movie.setTitle(dto.getTitle());
         }
@@ -34,7 +41,7 @@ public class MovieMapper {
         }
 
         if (dto.getGenreMovie() != null) {
-            movie.setGenreMovie(dto.getGenreMovie());
+            movie.setGenreMovie(genres);
         }
 
         if (dto.getRating() != null) {
@@ -50,11 +57,11 @@ public class MovieMapper {
         }
 
         if (dto.getDirector() != null) {
-            movie.setDirector(dto.getDirector());
+            movie.setDirector(director);
         }
 
-        if (dto.getActors() != null) {
-            movie.setActors(dto.getActors());
+        if (dto.getActorIds() != null) {
+            movie.setActors(actors);
         }
     }
 }
