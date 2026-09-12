@@ -8,7 +8,7 @@ public class DirectorResponseDto {
     private String name;
     private Integer birthYear;
 
-    private DirectorResponseDto(Director director) {
+    public DirectorResponseDto(Director director) {
         this.id = director.getId();
         this.name = director.getName();
         this.birthYear = director.getBirthYear();
