@@ -60,10 +60,10 @@ public class MovieController {
 
     @GetMapping("/filter")
     public List<MovieResponseDto> filterMovies(
-            @RequestParam(required = false) Genre genreMovie,
+            @RequestParam(required = false) Long genreId,
             @RequestParam(required = false) Integer year
             ) {
-        return movieService.filterMovies(genreMovie, year);
+        return movieService.filterMovies(genreId, year);
     }
 
 

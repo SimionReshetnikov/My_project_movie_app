@@ -59,13 +59,15 @@ public class Movie {
     public Movie() {}
 
     public Movie(String title, Integer year, Double rating,
-                 String description, String posterUrl, Director director) {
+                 String description, String posterUrl, Director director, Set<Genre> genre, Set<Actor> actors) {
         this.title = title;
         this.year = year;
         this.rating = rating;
         this.description = description;
         this.posterUrl = posterUrl;
         this.director = director;
+        this.genre = genre;
+        this.actors = actors;
     }
 
     public Long getId() {

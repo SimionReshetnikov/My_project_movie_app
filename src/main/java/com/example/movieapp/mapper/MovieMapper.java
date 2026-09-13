@@ -12,14 +12,16 @@ import java.util.Set;
 public class MovieMapper {
 
     //Request -> Entity
-    public static Movie toEntity(MovieRequestDto dto, Director director) {
+    public static Movie toEntity(MovieRequestDto dto, Director director, Set<Genre> genres, Set<Actor> actors) {
         return new Movie(
                 dto.getTitle(),
                 dto.getYear(),
                 dto.getRating(),
                 dto.getDescription(),
                 dto.getPosterUrl(),
-                director
+                director,
+                genres,
+                actors
         );
     }
 

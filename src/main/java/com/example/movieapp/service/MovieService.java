@@ -2,6 +2,7 @@ package com.example.movieapp.service;
 
 import com.example.movieapp.dto.request.MovieRequestDto;
 import com.example.movieapp.dto.response.MovieResponseDto;
+import com.example.movieapp.exception.FileStorageException;
 import com.example.movieapp.mapper.MovieMapper;
 import com.example.movieapp.model.Actor;
 import com.example.movieapp.model.Director;
@@ -52,9 +53,10 @@ public class MovieService {
     }
 
     public MovieResponseDto createMovie(MovieRequestDto movieRequestDto) {
-        Director director = directorRepository.findById(movieRequestDto.getDirector())
-                .orElseThrow(() -> new EntityNotFoundException("Director is not found."));
-        Movie movie = MovieMapper.toEntity(movieRequestDto, director);
+        Director director = findDirector(movieRequestDto.getDirector());
+        Set<Genre> genres = findGenres(movieRequestDto.getGenreMovie());
+        Set<Actor> actors = findActors(movieRequestDto.getActorIds());
+        Movie movie = MovieMapper.toEntity(movieRequestDto, director, genres, actors);
         return MovieMapper.toResponse(movieRepository.save(movie));
     }
 
@@ -62,18 +64,9 @@ public class MovieService {
         Movie movieSave = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id)));
 
-        Set<Genre> genres = new HashSet<>();
-        for (Long genreId : movieDetails.getGenreMovie()) {
-            genres.add(genreRepository.findById(genreId).orElseThrow(() -> new EntityNotFoundException("Genre is not found.")));
-        }
-
-        Set<Actor> actors = new HashSet<>();
-        for (Long actorId : movieDetails.getActorIds()) {
-            actors.add(actorRepository.findById(actorId).orElseThrow(() -> new EntityNotFoundException("Actor is not found.")));
-        }
-
-        Director director = directorRepository.findById(movieDetails.getDirector())
-                .orElseThrow(() -> new EntityNotFoundException("Director is not found."));
+        Director director = findDirector(movieDetails.getDirector());
+        Set<Genre> genres = findGenres(movieDetails.getGenreMovie());
+        Set<Actor> actors = findActors(movieDetails.getActorIds());
 
         MovieMapper.updateEntity(movieSave, movieDetails, genres, director, actors);
         return MovieMapper.toResponse(movieRepository.save(movieSave));
@@ -94,12 +87,12 @@ public class MovieService {
                 .map(MovieMapper::toResponse).toList();
     }
 
-    public List<MovieResponseDto> filterMovies(Genre genre, Integer year) {
-        if (genre != null && year != null) {
-            return movieRepository.findByGenreMovieAndYear(genre, year).stream()
+    public List<MovieResponseDto> filterMovies(Long genreId, Integer year) {
+        if (genreId != null && year != null) {
+            return movieRepository.findByGenreMovieAndYear(findGenre(genreId), year).stream()
                     .map(MovieMapper::toResponse).toList();
-        } else if (genre != null) {
-            return movieRepository.findByGenreMovie(genre).stream()
+        } else if (genreId != null) {
+            return movieRepository.findByGenreMovie(findGenre(genreId)).stream()
                     .map(MovieMapper::toResponse).toList();
         } else if (year != null) {
             return movieRepository.findByYear(year).stream()
@@ -132,16 +125,40 @@ public class MovieService {
             }
 
             String fileName = "movie-" + id + ".jpg";
-            Path path = Paths.get(uploadDir + fileName);
+            Path path = Paths.get(uploadDir, fileName);
             posterUrlFile.transferTo(path.toFile());
 
-            movie.setPosterUrl("/" + uploadDir + fileName);
+            movie.setPosterUrl("/" + uploadDir + "/" + fileName);
 
             Movie saveMovie = movieRepository.save(movie);
 
             return MovieMapper.toResponse(saveMovie);
         } catch(IOException ex) {
-            throw new RuntimeException("Failed to save poster", ex);
+            throw new FileStorageException("Failed to save poster", ex);
         }
+    }
+
+    private Director findDirector(Long directorId) {
+        return directorRepository.findById(directorId)
+                .orElseThrow(() -> new EntityNotFoundException("Director is not found."));
+    }
+
+    private Genre findGenre(Long genreId) {
+        return genreRepository.findById(genreId)
+                .orElseThrow(() -> new EntityNotFoundException("Genre is not found."));
+    }
+
+    private Set<Genre> findGenres(Set<Long> genreIds) {
+        if (genreIds == null || genreIds.isEmpty()) {
+            return new HashSet<>();
+        }
+        return new HashSet<>(genreRepository.findAllById(genreIds));
+    }
+
+    private Set<Actor> findActors(Set<Long> actorsId) {
+        if (actorsId == null || actorsId.isEmpty()) {
+            return new HashSet<>();
+        }
+        return new HashSet<>(actorRepository.findAllById(actorsId));
     }
 }

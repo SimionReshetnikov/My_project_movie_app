@@ -44,6 +44,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<ErrorResponse> handleFileStorage(FileStorageException ex) {
+        ErrorResponse error = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.value()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
         ErrorResponse error = new ErrorResponse(
