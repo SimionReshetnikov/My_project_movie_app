@@ -73,9 +73,8 @@ public class MovieService {
     }
 
     public void deleteMovie(Long id) {
-        Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id)));
-        movieRepository.delete(movie);
+        movieRepository.delete(movieRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id))));
     }
 
     public List<MovieResponseDto> searchByTitle(String title) {

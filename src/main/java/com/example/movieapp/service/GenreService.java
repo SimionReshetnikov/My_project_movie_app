@@ -8,7 +8,6 @@ import com.example.movieapp.repository.GenreRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +32,7 @@ public class GenreService {
 
     public GenreResponseDto getById(Long id) {
         return GenreMapper.toResponse(genreRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Genre is not found.")));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("No genre with this ID = %d was found.", id))));
     }
 
     public void deleteGenre(Long id) {
