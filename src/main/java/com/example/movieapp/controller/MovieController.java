@@ -5,6 +5,7 @@ import com.example.movieapp.dto.response.MovieResponseDto;
 import com.example.movieapp.model.Genre;
 import com.example.movieapp.service.MovieService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,7 @@ public class MovieController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public MovieResponseDto createMovie(@Valid @RequestBody MovieRequestDto movie) {
         return movieService.createMovie(movie);
     }
@@ -49,6 +51,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMovie(@PathVariable Long id) {
         movieService.deleteMovie(id);
     }

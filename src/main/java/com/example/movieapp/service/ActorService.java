@@ -34,12 +34,12 @@ public class ActorService {
         return ActorMapper.toResponse(actorRepository.save(actor));
     }
 
-    public ActorResponseDto findById(Long id) {
+    public ActorResponseDto getById(Long id) {
         return ActorMapper.toResponse(actorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Actor is not found")));
     }
 
-    public Set<ActorResponseDto> findAll() {
+    public Set<ActorResponseDto> getAll() {
         return actorRepository.findAll().stream().map(ActorMapper::toResponse)
                 .collect(Collectors.toSet());
     }
