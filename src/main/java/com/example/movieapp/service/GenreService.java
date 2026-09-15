@@ -6,6 +6,7 @@ import com.example.movieapp.mapper.GenreMapper;
 import com.example.movieapp.model.Genre;
 import com.example.movieapp.repository.GenreRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -40,6 +41,7 @@ public class GenreService {
                 .orElseThrow(() -> new EntityNotFoundException("Genre is not found.")));
     }
 
+    @Transactional
     public GenreResponseDto updateGenre(Long id, GenreRequestDto dtoUpdate) {
         Genre genre = genreRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Genre is not found."));

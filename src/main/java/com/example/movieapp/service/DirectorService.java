@@ -6,6 +6,7 @@ import com.example.movieapp.mapper.DirectorMapper;
 import com.example.movieapp.model.Director;
 import com.example.movieapp.repository.DirectorRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -25,6 +26,7 @@ public class DirectorService {
         return DirectorMapper.toResponse(directorRepository.save(director));
     }
 
+    @Transactional
     public DirectorResponseDto updateDirector(Long id, DirectorRequestDto dtoUpdate) {
         Director director = directorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Director is not found"));

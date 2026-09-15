@@ -60,6 +60,7 @@ public class MovieService {
         return MovieMapper.toResponse(movieRepository.save(movie));
     }
 
+    @Transactional
     public MovieResponseDto updateMovie(Long id, MovieRequestDto movieDetails) {
         Movie movieSave = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("No film with this ID = %d was found.", id)));
